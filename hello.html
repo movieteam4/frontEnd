@@ -1,0 +1,16 @@
+
+<form action={% url 'hello' %} method='POST'>
+    {% csrf_token %}
+    <input type='hidden' name='where_from' value='from_log_in'>
+    <p>e-mail</p>
+    <input type='input' name='e_mail' value={{e_mail}}>
+    <p>password</p>
+    <input type='password' name='password' value={{password}}>
+    <input type='submit' name='log_in' value='登入'>
+</form>
+<form action={% url 'hello' %} method='POST'>
+    {% csrf_token %}
+    <input type='hidden' name='where_from' value='create_account'>
+    <input type='submit' name='create_account' value='建立帳號'>
+</form>
+<p>{{detail}}</p>

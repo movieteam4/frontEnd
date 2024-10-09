@@ -1,0 +1,12 @@
+<form action={% url 'hello' %} method='POST'>
+    {% csrf_token %}
+    <p>e-mail</p>
+    <input type='input' name='create_e_mail' value={{create_e_mail}}>
+    <p>password</p>
+    <input type='password' name='create_password_1' value={{create_password_1}}>
+    <p>comfirm password</p>
+    <input type='password' name='create_password_2' value={{create_password_2}}>
+    <input type='hidden' name='where_from' value='from_create'>
+    <input type='submit' name='create_account' value='建立帳號'>
+</form>
+<p>{{detail}}</p>

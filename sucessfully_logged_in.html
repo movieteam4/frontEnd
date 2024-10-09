@@ -1,0 +1,6 @@
+<p>登入成功</p>
+<form action={% url 'hello' %} method='POST'>
+    {% csrf_token %}
+    <input type='hidden' name='where_from' value='from_log_out'>
+    <input type='submit' name='log_out' value='登出'>
+</form>
