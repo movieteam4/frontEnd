@@ -137,8 +137,12 @@ def call_dataframe():
     result=cursor.fetchall()
     res=result[0][1]
     vieshow_data=pd.read_html(res)[0]
+    cursor.execute('SELECT * FROM vieshow_html2 ORDER BY id DESC LIMIT 1')
+    result=cursor.fetchall()
+    res=result[0][1]
+    vieshow_data2=pd.read_html(res)[0]
     # vieshow_data['日期']=vieshow_data['日期'].apply(unify_date)
-    final_data=pd.concat([vieshow_data,final_data])
+    final_data=pd.concat([vieshow_data,final_data,vieshow_data2])
     final_data['日期']=final_data['日期'].apply(unify_date)
     final_data['日期'] = pd.to_datetime(final_data['日期'])
     cinema_to_be_fill=final_data.groupby('電影院名稱').count().index
@@ -340,5 +344,5 @@ def month_ranking(final_data):
     # final_data = final_data[['中文片名',"當周金額","當周票房數","總金額","總票房"]].sort_values(by='當周票房數', ascending=False).head(10)
     return final_data
 # che=call_dataframe()
-# che2 = che[che['電影院名稱'].str.contains('威秀')].groupby('中文片名').count()
+# che2 = che[che['電影院名稱'].str.contains('威秀')]
 

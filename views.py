@@ -60,12 +60,16 @@ def shop(request):
     if final_data is None:
         from myapp.call_dataframe import call_dataframe ,week_ranking
         final_data=week_ranking(call_dataframe())
-        cache.set('dataframe',final_data)
+        cache.set('dataframe',final_data)  #暫存
     horrors_list=final_data[final_data['類型'].str.contains('恐', na=False)].sort_values(by='當周票房數', ascending=False)
     story_rich_list=final_data[final_data['類型'].str.contains('劇情', na=False)].sort_values(by='當周票房數', ascending=False)
-    animation_list=final_data[(final_data['類型'].str.contains('動畫', na=False))|(final_data['類型'].str.contains('卡通'))].sort_values(by='當周票房數', ascending=False)
+    animation_list=final_data[(final_data['類型'].str.contains('動畫', na=False))|(final_data['類型'].str.contains('卡通',na=False))].sort_values(by='當周票房數', ascending=False)
+    action_list=final_data[final_data['類型'].str.contains('動作', na=False)].sort_values(by='當周票房數', ascending=False)
+    documentary_list=final_data[final_data['類型'].str.contains('紀錄', na=False)].sort_values(by='當周票房數', ascending=False)
+    musical_list=final_data[final_data['類型'].str.contains('音樂', na=False)].sort_values(by='當周票房數', ascending=False)
+    romance_list=final_data[final_data['類型'].str.contains('愛', na=False)].sort_values(by='當周票房數', ascending=False)
     from myapp.show_more_filter import filter_show
-    res=filter_show(horrors_list,story_rich_list,animation_list)
+    res=filter_show(horrors_list,story_rich_list,animation_list,action_list,documentary_list,musical_list,romance_list)
     return render(request,'shop.html',locals())
 def Taiwan_movies_all(request):
     global show_data , db_config
@@ -75,7 +79,12 @@ def Taiwan_movies_all(request):
         final_data = cache.get('dataframe')
         if final_data is not None:
             res=html_show(final_data)
-            return render(request,'Taiwan_movie_all.html', {'res': res})
+            number_1=final_data['宣傳照'].iloc[0]
+            description=final_data['簡介'].iloc[0]
+            number_1_name=final_data['中文片名'].iloc[0]
+            number_1_name_eng=final_data['英文片名'].iloc[0]
+            description=description[:len(description)//3]+'...'
+            return render(request,'Taiwan_movie_all.html', locals())
         from myapp.call_dataframe import call_dataframe ,week_ranking
         final_data=week_ranking(call_dataframe())
         cache.set('dataframe',final_data)
@@ -161,6 +170,5 @@ def hello(request):
         verifiedAccount(mail=create_e_mail,password=create_password).save()
         return render(request,'hello.html',locals())
     return render(request,'hello.html')
-
 
 

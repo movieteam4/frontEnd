@@ -1,16 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-TW">
 
-<form action={% url 'hello' %} method='POST'>
-    {% csrf_token %}
-    <input type='hidden' name='where_from' value='from_log_in'>
-    <p>e-mail</p>
-    <input type='input' name='e_mail' value={{e_mail}}>
-    <p>password</p>
-    <input type='password' name='password' value={{password}}>
-    <input type='submit' name='log_in' value='登入'>
-</form>
-<form action={% url 'hello' %} method='POST'>
-    {% csrf_token %}
-    <input type='hidden' name='where_from' value='create_account'>
-    <input type='submit' name='create_account' value='建立帳號'>
-</form>
-<p>{{detail}}</p>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Team 4</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-lugx-gaming.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+  </head>
+
+  <body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+      <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.onload = function () {
+        const preloader = document.getElementById('js-preloader');
+        if (preloader) {
+          preloader.style.display = 'none'; // Hide the preloader
+        }
+      }
+    </script>
+    <!-- ***** Preloader End ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            <img src="{% static 'assets/images/logo.png' %}" alt="" style="width: 158px;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                          <li>
+                            <div class="search-input">
+                              <form id="search" action="#">
+                                <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
+                                <button role="button"><i class='fas fa-search' ></i></button>
+                              </form>
+                            </div>
+                          </li>
+                          <li><a href="product-details.html">個人</a></li>
+                          <li><a href="contact.html">會員專區</a></li>
+                          <li><a href="{% url 'Taiwan_movies_all' %}"">Home</a></li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+      </header>
+      <!-- ***** Header Area End ***** -->
+
+      <div class="main-banner">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 align-self-center">
+              <div class="caption header-text">
+                <h5>Welcome to Team 4</h5>
+                <form action={% url 'Taiwan_movies_all' %} method='POST'>
+                    {% csrf_token %}
+                    <input type='hidden' name='where_from' value='from_log_in' style="font-size: 12px; padding: 20px 20px; font-family: 'Poppins', sans-serif;">
+                    <input type='input' name='e_mail' value={{e_mail}}>
+                    <br>
+                    <input type='password' name='password' value={{password}} style="font-size: 12px; padding: 20px 20px; font-family: 'Poppins', sans-serif;">
+                    <input type='submit' name='log_in' value='登入' style="font-size: 20px; padding: 25px 20px; text-align: center; line-height: 0px; font-family: 'Poppins', sans-serif;">
+                </form>
+                <form action={% url 'hello' %} method='POST'>
+                    {% csrf_token %}
+                    <input type='hidden' name='where_from' value='create_account'>
+                    <input type='submit' name='create_account' value='建立帳號' style="font-size: 20px; padding: 25px 20px; text-align: center; line-height: 0px; font-family: 'Poppins', sans-serif;">
+                </form>
+                <p>登入會員,獲得自動電影推薦!<br>{{detail}}</p>
+              </div>
+            </div>
+            <div class="col-lg-4 offset-lg-2">
+              <div class="right-image">
+                <img src="{{number_1}}" alt="">
+                <span class="price">Team&nbsp;4<br>宏碁班第4組專題<br>電影自動化推薦系統</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
