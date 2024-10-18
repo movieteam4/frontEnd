@@ -1,13 +1,20 @@
 from django.templatetags.static import static
 import pandas as pd
-def html_show(final_data):
+from myapp.models import Favorite
+def html_show(final_data,Favorite_movies_list=[],mail=False):
     # 初始化HTML表格
     movie_list = final_data.groupby('中文片名').count().index
     res = '<table style="vertical-align: top;">'
     opt_btn=['<h4>Free Storage</h4>','<h4>User More</h4>','<h4>Reply Ready</h4>','<h4>Easy Layout</h4>']
+    alert=''
+    if mail==False:
+        alert='''onclick="alert('請先登入！'); return false"'''
     # 遍歷每部電影
     for n, movie in enumerate(movie_list[1:5]):
+        check=''
         ch_name = final_data["中文片名"].iloc[n+1]
+        if ch_name in Favorite_movies_list:
+             check='checked'
         eng_name = final_data["英文片名"].iloc[n+1]
         genre=final_data["類型"].iloc[n+1]
 
@@ -27,12 +34,20 @@ def html_show(final_data):
                 <a href="product-details.html"><img src="{img_url}" alt="" width='260px' height='400px'></a>
                 <span class="ranking">&nbsp;當周第{n+2}名</span>
               </div>
+
               <div class="down-content">
                 <span class="category">{genre}</span>
                 <h4>{ch_name}</h4>
                 <a href="product-details.html">
                   <i class="fas fa-arrow-right"></i>
                 </a>
+              <div class="heart-checkbox">
+                <input type="checkbox" id="heart-checkbox{n}" data-movie-title="{ch_name}" {check}/>
+                <label for="heart-checkbox{n}" {alert} >
+                  <i class="far fa-heart"></i>  <!-- 空心愛心 -->
+                  <i class="fas fa-heart"></i>  <!-- 實心愛心 -->
+                </label>
+              </div>
               </div>
             </div>
           </div>'''

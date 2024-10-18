@@ -145,15 +145,15 @@ def call_dataframe():
     final_data=pd.concat([vieshow_data,final_data,vieshow_data2])
     final_data['日期']=final_data['日期'].apply(unify_date)
     final_data['日期'] = pd.to_datetime(final_data['日期'])
-    cinema_to_be_fill=final_data.groupby('電影院名稱').count().index
-    columns_to_be_filled=['導演','演員','類型','宣傳照']
-    # final_data['中文片名']=final_data['中文片名'].apply(remove_space)
-    for cinema in cinema_to_be_fill:
-        to_fill=final_data[final_data['電影院名稱']==cinema]
-        ch_names=to_fill.groupby('中文片名').count().index
-        for ch_name in ch_names:
-            for col in columns_to_be_filled:
-                final_data[col][(final_data[col].isna()) & (final_data['中文片名'].str.contains(ch_name,case=False))]=final_data[col][(final_data[col].isna()) & (final_data['中文片名'].str.contains(ch_name,case=False))].fillna(value=to_fill[[col,'中文片名']][to_fill['中文片名']==ch_name].iloc[0][col])
+    # cinema_to_be_fill=final_data.groupby('電影院名稱').count().index
+    # columns_to_be_filled=['導演','演員','類型','宣傳照']
+    # # final_data['中文片名']=final_data['中文片名'].apply(remove_space)
+    # for cinema in cinema_to_be_fill:
+    #     to_fill=final_data[final_data['電影院名稱']==cinema]
+    #     ch_names=to_fill.groupby('中文片名').count().index
+    #     for ch_name in ch_names:
+    #         for col in columns_to_be_filled:
+    #             final_data[col][(final_data[col].isna()) & (final_data['中文片名'].str.contains(ch_name,case=False))]=final_data[col][(final_data[col].isna()) & (final_data['中文片名'].str.contains(ch_name,case=False))].fillna(value=to_fill[[col,'中文片名']][to_fill['中文片名']==ch_name].iloc[0][col])
     return final_data
 def week_ranking(final_data):
     from selenium import webdriver
@@ -164,6 +164,7 @@ def week_ranking(final_data):
     from bs4 import BeautifulSoup
     import pandas as pd
     from datetime import datetime
+    import os
     import traceback
     ranking_error='排行榜 程式完美'
     ranking_data =''
@@ -186,12 +187,15 @@ def week_ranking(final_data):
             # 寫入要搜尋的url資訊
             url = front_page_web + s + "/100/0/all/False/ReleaseDate/" + str(date)
             # 使用動態抓取,並用隱性等待駛往詹資訊完整抓取資料
-            chrome_options = Options()
-            chrome_options.add_argument('--headless')
-            chrome_options.add_argument('--no-sandbox')
-            chrome_options.add_argument('--disable-dev-shm-usage')
-            chrome_options.add_argument('--disable-blink-features=AutomationControlled')
-            driver = webdriver.Chrome(options=chrome_options)
+            chrome_options = webdriver.ChromeOptions()
+            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+            chrome_options.add_argument("--headless") #無頭模式
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--no-sandbox")
+            chrome_options.add_argument("--window-size=1920,1080")
+            from selenium.webdriver.chrome.service import Service
+            service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
+            driver = webdriver.Chrome(service=service, options=chrome_options)
             # driver = webdriver.Chrome()
             driver.get(url)
             driver.implicitly_wait(10)
@@ -258,6 +262,7 @@ def month_ranking(final_data):
     from bs4 import BeautifulSoup
     import pandas as pd
     from datetime import datetime
+    import os
     import traceback
     ranking_error='排行榜 程式完美'
     ranking_data =''
@@ -280,12 +285,16 @@ def month_ranking(final_data):
             # 寫入要搜尋的url資訊
             url = front_page_web + s + "/100/0/all/False/ReleaseDate/" + str(date)
             # 使用動態抓取,並用隱性等待駛往詹資訊完整抓取資料
-            chrome_options = Options()
-            chrome_options.add_argument('--headless')
-            chrome_options.add_argument('--no-sandbox')
-            chrome_options.add_argument('--disable-dev-shm-usage')
-            chrome_options.add_argument('--disable-blink-features=AutomationControlled')
-            driver = webdriver.Chrome(options=chrome_options)
+            chrome_options = webdriver.ChromeOptions()
+            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+            chrome_options.add_argument("--headless") #無頭模式
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--no-sandbox")
+            chrome_options.add_argument("--window-size=1920,1080")
+            from selenium.webdriver.chrome.service import Service
+            service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
+            driver = webdriver.Chrome(service=service, options=chrome_options)
+            # driver = webdriver.Chrome()
             # driver = webdriver.Chrome()
             driver.get(url)
             driver.implicitly_wait(10)
@@ -343,6 +352,27 @@ def month_ranking(final_data):
     final_data = final_data.drop_duplicates(subset='中文片名', keep='first')
     # final_data = final_data[['中文片名',"當周金額","當周票房數","總金額","總票房"]].sort_values(by='當周票房數', ascending=False).head(10)
     return final_data
+def address():
+    import mysql.connector
+    import pandas as pd
+    db_config = {
+        'host': 'u3r5w4ayhxzdrw87.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        'user': 'dhv81sqnky35oozt',
+        'password': 'rrdv8ehsrp8pdzqn',
+        'database': 'xltc236odfo1enc9',
+        'charset': 'utf8mb4'
+    }
+    connection = mysql.connector.connect(**db_config)
+    if connection.is_connected():
+        print("成功連接到 MariaDB 資料庫")
+    cursor=connection.cursor()
+    # data=pd.read_csv('臺灣地區32碼郵遞區號.csv')
+    # data=data.to_html(classes='table table-striped', index=False).replace(r"'",'’')
+    cursor.execute('SELECT * FROM address')
+    result=cursor.fetchall()
+    res=result[0][0]
+    df=pd.read_html(res)[0]
+    return df
 # che=call_dataframe()
 # che2 = che[che['電影院名稱'].str.contains('威秀')]
 
