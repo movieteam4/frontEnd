@@ -1,26 +1,52 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="zh-TW">
-
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <title>Team 4</title>
-
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/bootstrap.min.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/templatemo-lugx-gaming.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/templatemo-lugx-gaming.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/owl.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-  </head>
+    <!-- TemplateMo 589 lugx gaming -->
+    {% if detail %}
+  <script type="text/javascript">
+      alert("{{detail}}");
+  </script>
+{% endif %}
+<style>
+  .heart-checkbox input[type="checkbox"] {
+    display: none;  /* 隱藏默認的checkbox */
+  }
 
+  .heart-checkbox label {
+    position: relative;
+    font-size: 25px;
+    cursor: pointer;
+    color: #ff4081;  /* 愛心顏色 */
+  }
+
+  .heart-checkbox label i.fas.fa-heart {
+    display: none;  /* 初始狀態，隱藏實心愛心 */
+  }
+
+  .heart-checkbox input[type="checkbox"]:checked + label i.fas.fa-heart {
+    display: inline;  /* 勾選後顯示實心愛心 */
+  }
+
+  .heart-checkbox input[type="checkbox"]:checked + label i.far.fa-heart {
+    display: none;  /* 勾選後隱藏空心愛心 */
+  }
+</style>
+</head>
   <body>
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
@@ -50,8 +76,8 @@
               <div class="col-12">
                   <nav class="main-nav">
                       <!-- ***** Logo Start ***** -->
-                      <a href="index.html" class="logo">
-                          <img src="{% static 'assets/images/logo.png' %}" alt="" style="width: 158px;">
+                      <a href="{% url 'Taiwan_movies_all' %}" class="logo">
+                          <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/logo.png" alt="" style="width: 158px;">
                       </a>
                       <!-- ***** Logo End ***** -->
                       <!-- ***** Menu Start ***** -->
@@ -59,16 +85,16 @@
                         <li>
                           <div class="search-input">
                             <form id="search" action="#">
-                              <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
-                              <button role="button"><i class='fas fa-search' ></i></button>
+                              <input type="text" placeholder="搜尋電影" id="searchText" name="searchKeyword" onkeypress="handle" />
+                              <button role="button" style="background-color: white; color: black;">
+                                <i class="fas fa-search" style="font-size: 20px;"></i>
+                              </button>
                             </form>
                           </div>
                         </li>
-                        <li><a href="product-details.html">個人</a></li>
-                        <li><a href="contact.html">會員專區</a></li>
-                        <li><a href="{% url 'hello' %}">Sign In</a></li>
+                        {{status|safe}}
                       </ul>
-                      <a class='menu-trigger'>
+                        <a class='menu-trigger'>
                           <span>Menu</span>
                       </a>
                   </nav>
@@ -102,42 +128,42 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-3 col-md-6">
-            <a href="#">
+            <a href="{% url 'Line' %}">
               <div class="item">
                 <div class="image">
-                  <img src="{% static 'assets/images/featured-01.png' %}" alt="" style="max-width: 44px;">
+                  <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/Line.png" alt="" style="max-width: 44px;">
                 </div>
-                <h4>Free Storage</h4>
+                <h4>我們的Line</h4>
               </div>
             </a>
           </div>
           <div class="col-lg-3 col-md-6">
-            <a href="#">
+            <a href="{% url 'user_more' %}">
               <div class="item">
                 <div class="image">
-                  <img src="{% static 'assets/images/featured-02.png' %}" alt="" style="max-width: 44px;">
+                  <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/featured-02.png" alt="" style="max-width: 44px;">
                 </div>
-                <h4>User More</h4>
+                <h4>個人資料</h4>
               </div>
             </a>
           </div>
           <div class="col-lg-3 col-md-6">
-            <a href="#">
+            <a href="{% url 'favorite_page' %}">
               <div class="item">
                 <div class="image">
-                  <img src="{% static 'assets/images/featured-03.png' %}" alt="" style="max-width: 44px;">
+                  <i class="fas fa-heart" style="font-size: 44px; color: white; margin-top:25px"></i>
                 </div>
-                <h4>Reply Ready</h4>
+                <h4>收藏</h4>
               </div>
             </a>
           </div>
           <div class="col-lg-3 col-md-6">
-            <a href="#">
+            <a href="{% url 'about_us' %}">
               <div class="item">
                 <div class="image">
-                  <img src="{% static 'assets/images/featured-04.png' %}" alt="" style="max-width: 44px;">
+                  <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/featured-04.png" alt="" style="max-width: 44px;">
                 </div>
-                <h4>Easy Layout</h4>
+                <h4>關於我們</h4>
               </div>
             </a>
           </div>
@@ -171,3 +197,46 @@
         </div>
       </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/isotope.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/owl-carousel.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/counter.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/custom.js"></script>
+    <script type="text/javascript">
+      // 將 CSRF 令牌存儲在 JavaScript 變量中
+      const csrftoken = '{{ csrf_token }}';
+    </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // 監聽每個 checkbox 的變化
+
+      $('input[type="checkbox"]').on('change', function() {
+        var checkboxId = $(this).attr('id');        // 取得勾選框的 id
+        var isChecked = $(this).prop('checked');    // 判斷是否勾選
+        var movieTitle = $(this).data('movie-title'); // 取得電影的中文名稱
+
+        // 發送 AJAX 請求
+        $.ajax({
+          url: "{% url 'handle' %}",  // 替換成後端的 URL
+          method: 'POST',  // 使用 POST 方法
+          data: {
+            'id': checkboxId,        // 傳送 checkbox 的 ID
+            'liked': isChecked,      // 傳送勾選狀態 (true 或 false)
+            'movie_title': movieTitle,
+            'csrfmiddlewaretoken': csrftoken // 傳送電影名稱
+          },
+          success: function(response) {
+            // 可以在這裡處理成功回調
+            console.log('Data saved successfully:', response);
+          },
+          error: function(error) {
+            // 可以在這裡處理錯誤回調
+            console.error('Error saving data:', error);
+          }
+        });
+      });
+    });
+  </script>

@@ -74,42 +74,23 @@
             </div>
         </div>
       </header>
-      <!-- ***** Header Area End ***** -->
-
       <div class="main-banner">
         <div class="container">
           <div class="row">
             <div class="col-lg-6 align-self-center">
               <div class="caption header-text">
-                <h5>登入會員</h5>
-                <form action="{% url 'hello' %}" method="POST">
-                  {% csrf_token %}
-                  <input type="hidden" name="where_from" value="from_log_in" style="font-size: 12px; padding: 20px 20px; font-family: 'Poppins', sans-serif;">
-                  <input type="email" name="e_mail" value="{{e_mail}}" placeholder="輸入信箱" style="font-size: 12px; padding: 10px 20px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; width: 50%; height : 30px">
-                  <br>
-                  <input type="password" name="password" value="{{password}}" placeholder="輸入密碼" style="font-size: 12px; padding: 10px 20px; font-family: 'Poppins', sans-serif; margin-bottom: 20px; width: 50%; height : 30px">
-                  <br>
-                  <div style="display: flex; gap: 10px;">
-                    <input type="submit" name="log_in" value="登入" style="font-size: 20px; padding: 15px 20px; text-align: center; line-height: 0px; font-family: 'Poppins', sans-serif; flex: none;">
-                </form>
-                <form action="{% url 'hello' %}" method="POST">
-                  {% csrf_token %}
-                  <input type="hidden" name="where_from" value="create_account">
-                  <input type="submit" name="create_account" value="建立帳號" style="font-size: 20px; padding: 15px 20px; text-align: center; line-height: 0px; font-family: 'Poppins', sans-serif; flex: none;">
-                </form>
-                  </div>
-                </form>
-                <p>登入會員,獲得自動電影推薦!<br>{{detail}}</p>
+                <img src='https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/Line_QR.png' style='height:172px; width:172px'>
+                <h5 style="font-size: 24px" >請掃描QR Code</h5>
               </div>
+              <p style="font-size: 24px">加入我們的官方Line<br>獲得及時最新電影推薦</p>
             </div>
+
+            <!-- 将 col-lg-4 offset-lg-2 移到 row 内部 -->
             <div class="col-lg-4 offset-lg-2">
               <div class="right-image">
-                <img src="{{number_1}}" alt="">
                 <span class="price">Team&nbsp;4<br>宏碁班第4組專題<br>電影自動化推薦系統</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-

@@ -1,0 +1,333 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+  <head>
+    {% if detail %}
+    <script type="text/javascript">
+      alert("{{detail}}");
+    </script>
+    {% endif %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Team 4</title>
+
+   <!-- Bootstrap core CSS -->
+   <link href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/bootstrap.min.css" rel="stylesheet">
+
+   <!-- Additional CSS Files -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/fontawesome.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/templatemo-lugx-gaming.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/owl.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/animate.css">
+   <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+   <!-- TemplateMo 589 lugx gaming -->
+  </head>
+
+  <body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+      <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.onload = function () {
+        const preloader = document.getElementById('js-preloader');
+        if (preloader) {
+          preloader.style.display = 'none'; // Hide the preloader
+        }
+      }
+    </script>
+    <!-- ***** Preloader End ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="{% url 'Taiwan_movies_all' %}" class="logo">
+                            <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/logo.png" alt="" style="width: 158px;">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                          <li>
+                            <div class="search-input">
+                              <form id="search" action="#">
+                                <input type="text" placeholder="電影搜尋" id='searchText' name="searchKeyword" onkeypress="handle" />
+                                <button role="button" style="background-color: white; color: black;">
+                                  <i class="fas fa-search" style="font-size: 20px;"></i>
+                                </button>
+                              </form>
+                            </div>
+                          </li>
+                          <li><a href="{% url 'Taiwan_movies_all' %}">Home</a></li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+      </header>
+      <!-- ***** Header Area End ***** -->
+
+      <div class="main-banner">
+        <div class="container">
+          <div class="row">
+            <h2 style="text-align: center;">個人資訊</h2>
+            <div class="col-lg-6 align-self-center">
+              <div class="caption header-text">
+                <form action="{% url 'user_more' %}" method="post" id="registration-form">
+                  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                {% comment %} <form action="/myapp/logtest/" method="post" id="registration-form">
+                  <input type="hidden" name="csrfmiddlewaretoken" value="2Baz5JCBY7h9m82r89WWluOJO7v2LUQotcz2TjRQusKswHoA1jwbDVDLwexmKsSy"> {% endcomment %}
+                  <div class="form-row">
+
+                    <div class="form-row">
+                      <label for="id_email" class="email">電子信箱：{{mail}}</label>
+                      <input type="hidden" name="email_address" id="id_email" value="{{mail}}">
+                      <span id="email-check" style="color:red;"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="id_name" class="required">名字：</label>
+                        <input type="text" name="name" maxlength="50" required id="id_name" value="{{name}}">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="id_date_of_birth" class="required">生日：</label>
+                        <input type="date" name="date_of_birth" id="id_date_of_birth"  value="{{date_of_birth}}">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="id_mobile_phone" class="required">手機：</label>
+                        <input type="tel" name="mobile_phone" maxlength="15" required id="id_mobile_phone"  value="{{mobile_phone}}">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="id_national_id" class="required">身分證字號：</label>
+                        <input type="text" name="national_id" maxlength="10" required id="id_national_id" value="{{national_id}}">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="city">所在縣市:</label>
+                        <select id="city" name="city">
+                            {%for c_name in list_city %}
+                                <option value={{c_name}}>{{c_name}}</option>
+                            {% endfor%}
+                                <!-- 可以依需求增加更多縣市 -->
+                        </select><br>
+                        <label for="district">鄉鎮市區:</label>
+                        <select id="district" name="district" disabled>
+                          <option value="">請先選擇縣市</option>
+                        </select><br>
+                        <label for="road">路段:</label>
+                        <select id="road" name="road" disabled>
+                          <option value="">請先選擇區域</option>
+                        </select><br>
+                        <label for="id_address">地址：</label>
+                        <input type="address" name="address" maxlength="255" id="id_address" value="{{address}}">
+                  </div>
+
+                    <div class="form-row">
+                        <label for="id_occupation">職業：</label>
+                        <input type="text" name="occupation" maxlength="100" id="id_occupation" value="{{occupation}}">
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-lg-6 align-self-center" style="margin-top: 50px;">
+                    <div class="form-row">
+                      <label for="id_favorite_cinema">最常去的影城：</label>
+                      <select name="favorite_cinema" id="id_favorite_cinema">
+                        <option value="no_data" {% if favorite_cinema == 'no_data' %}selected{% endif %}></option>
+                        <option value="shin_kong"  {% if favorite_cinema == 'shin_kong' %}selected{% endif %}>新光影城</option>
+                        <option value="vienshow"  {% if favorite_cinema == 'vienshow' %}selected{% endif %}>華納威秀</option>
+                        <option value="ambassedor"  {% if favorite_cinema == 'ambassedor' %}selected{% endif %}>國賓影城</option>
+                        <option value="show_time"  {% if favorite_cinema == 'show_time' %}selected{% endif %}>秀泰影城</option>
+                        <option value="miranew"  {% if favorite_cinema == 'miranew' %}selected{% endif %}>美麗新影城</option>
+                        <option value="mira"  {% if favorite_cinema == 'mira' %}selected{% endif %}>大直美麗華</option>
+                    </select>
+
+                    <div class="form-row">
+                        <label for="id_marital_status">婚姻狀況：</label>
+                        <select name="marital_status" id="id_marital_status">
+                            <option value="no_data" {% if marital_status == 'no_data' %}selected{% endif %}></option>
+                            <option value="Single" {% if marital_status == 'Single' %}selected{% endif %}>單身</option>
+                            <option value="Married" {% if marital_status == 'Married' %}selected{% endif %}>已婚</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="id_household_income">年收入：</label>
+                        <select name="household_income" id="id_household_income">
+                            <option value="no_data"  {% if household_income == 'no_data' %}selected{% endif %}></option>
+                            <option value="four_down" {% if household_income == 'four_down' %}selected{% endif %}>40萬以下</option>
+                            <option value="four_six" {% if household_income == 'four_six' %}selected{% endif %}>41萬~60萬</option>
+                            <option value="six_eight" {% if household_income == 'six_eight' %}selected{% endif %}>61萬~80萬</option>
+                            <option value="eight_onemillion" {% if household_income == 'eight_onemillion' %}selected{% endif %}>81萬~100萬</option>
+                            <option value="onemillion_twomillion" {% if household_income == 'onemillion_twomillion' %}selected{% endif %}>100萬~200萬</option>
+                            <option value="rich" {% if household_income == 'rich' %}selected{% endif %}>200萬以上</option>
+                      </select>
+                    </div>
+
+                    <div class="form-row">
+                      <label for="id_sex">性別：</label>
+                      <select name="sex" id="id_sex">
+                          <option value="no_data"  {% if sex == 'no_data' %}selected{% endif %}></option>
+                          <option value="Male" {% if sex == 'Male' %}selected{% endif %}>男</option>
+                          <option value="Female" {% if sex == 'Female' %}selected{% endif %}>女</option>
+                          <option value="Other" {% if sex == 'Other' %}selected{% endif %}>其他</option>
+                      </select>
+                  </div>
+
+                  <div class="form-row">
+                    <label for="id_education">教育程度：</label>
+                    <select name="education" id="education">
+                      <option value="no_data"  {% if education == 'no_data' %}selected{% endif %}></option>
+                      <option value="primary_school" {% if education == 'primary_school' %}selected{% endif %}>小學</option>
+                      <option value="junior_high_school" {% if education == 'junior_high_school' %}selected{% endif %}>國中</option>
+                      <option value="high_school" {% if education == 'high_school' %}selected{% endif %}>高中</option>
+                      <option value="university" {% if education == 'university' %}selected{% endif %}>大學</option>
+                      <option value="graduate" {% if education == 'graduate' %}selected{% endif %}>研究所</option>
+                      <option value="doctoral" {% if education == 'doctoral' %}selected{% endif %}>博士班</option>
+                  </select>
+                </div>
+                    <div class="form-row">
+                      <label for="id_favorite_genres">喜好電影類型：</label>
+                      <div id="favorite_genres">
+                          <label><input type="checkbox" name="f_genres" value="Action"  {% if "Action" in favorite_genres %}checked{% endif %}> 動作片</label>
+                          <label><input type="checkbox" name="f_genres" value="Adventure"  {% if "Adventure" in favorite_genres %}checked{% endif %}> 冒險片</label>
+                          <label><input type="checkbox" name="f_genres" value="Animation" {% if "Animation" in favorite_genres %}checked{% endif %}> 動畫片</label>
+                          <label><input type="checkbox" name="f_genres" value="Art House" {% if "Art House" in favorite_genres %}checked{% endif %}> 藝術片</label>
+                          <label><input type="checkbox" name="f_genres" value="Comedy" {% if "Comedy" in favorite_genres %}checked{% endif %}> 喜劇片</label>
+                          <label><input type="checkbox" name="f_genres" value="Crime" {% if "Crime" in favorite_genres %}checked{% endif %}> 犯罪片</label><br>
+                          <label><input type="checkbox" name="f_genres" value="Documentary" {% if "Documentary" in favorite_genres %}checked{% endif %}> 紀錄片</label>
+                          <label><input type="checkbox" name="f_genres" value="Drama" {% if "Drama" in favorite_genres %}checked{% endif %}> 劇情片</label>
+                          <label><input type="checkbox" name="f_genres" value="Family" {% if "Family" in favorite_genres %}checked{% endif %}> 家庭片</label>
+                          <label><input type="checkbox" name="f_genres" value="Horror" {% if "Horror" in favorite_genres %}checked{% endif %}> 恐怖片</label>
+                          <label><input type="checkbox" name="f_genres" value="Children" {% if "Children" in favorite_genres %}checked{% endif %}> 兒童片</label>
+                          <label><input type="checkbox" name="f_genres" value="Kung Fu" {% if "Kung Fu" in favorite_genres %}checked{% endif %}> 功夫片</label><br>
+                          <label><input type="checkbox" name="f_genres" value="Musical" {% if "Musical" in favorite_genres %}checked{% endif %}> 音樂劇</label>
+                          <label><input type="checkbox" name="f_genres" value="Romance" {% if "Romance" in favorite_genres %}checked{% endif %}> 文藝愛情片</label>
+                          <label><input type="checkbox" name="f_genres" value="Science Fiction" {% if "Science Fiction" in favorite_genres %}checked{% endif %}> 科幻片</label>
+                          <label><input type="checkbox" name="f_genres" value="Thriller" {% if "Thriller" in favorite_genres %}checked{% endif %}> 驚悚懸疑片</label>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <label for="id_preferences">喜好的座位：</label>
+                      <div id="preferences">
+                        <label><input type="checkbox" name="seat" value="aisle" {% if "aisle" in seat %}checked{% endif %}> 靠走道</label>
+                        <label><input type="checkbox" name="seat" value="back" {% if "back" in seat %}checked{% endif %}> 後方</label>
+                        <label><input type="checkbox" name="seat" value="front" {% if "front" in seat %}checked{% endif %}> 前方</label>
+                        <label><input type="checkbox" name="seat" value="middle" {% if "middle" in seat %}checked{% endif %}> 中間</label>
+                      </div>
+                    </div>
+            </div>
+                    <div class="submit-row">
+                        <input type="submit" value="提交">
+                    </div>
+              </div>
+
+
+                </form>
+              </div>
+              <style>
+                .form-row {
+                  margin-bottom: 10px; /* 每個表單欄位之間的間距 */
+              }
+
+              .form-row label {
+                  display: inline-block; /* 讓 label 和 input 在同一行 */
+                  width: 150px; /* 設定 label 的寬度，這樣就可以對齊輸入框 */
+                  margin-bottom: 5px; /* 讓 label 距離 input 有些空隙 */
+              }
+
+              .form-row input {
+                  padding: 8px; /* 給輸入框添加內邊距 */
+                  box-sizing: border-box; /* 包括 padding 和邊框在內 */
+              }
+
+              /* Optional: For specific mobile or small screens */
+              @media (max-width: 768px) {
+                  .form-row label {
+                      width: 100%; /* 在小屏幕上讓 label 垂直顯示 */
+                      margin-bottom: 10px;
+                  }
+
+                  .form-row input {
+                      width: 100%; /* 讓 input 自動填滿整行 */
+                  }
+              }
+              input[type="checkbox"] {
+                pointer-events: auto;  /* 確保可以點擊 */
+                cursor: pointer; /* 確保鼠標放在複選框上時是指針 */
+                display: inline;
+                visibility:visible;
+                opacity: 1;
+            }
+            label {
+              white-space: nowrap;  /* 防止文字換行 */
+          }
+          #id_address {
+            width: calc(100% - 160px);  /* 計算寬度，減去 160px */
+        }
+              </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  var districtsByCity = {{dict_town|safe}}; // 載入市區字典
+    var roadsByDistrict ={{ dict_road|safe}}; // 載入路段字典
+
+    // 當選擇城市時，更新區域選單
+    $('#city').change(function() {
+      var city = $(this).val();
+      var districtSelect = $('#district');
+      var roadSelect = $('#road');
+      districtSelect.empty(); // 清空區域選單
+      roadSelect.empty();     // 清空路段選單
+      districtSelect.append('<option value="">請選擇區域</option>');
+      roadSelect.append('<option value="">請先選擇區域</option>');
+
+      if (city !== '') {
+        districtSelect.prop('disabled', false);
+        // 根據選擇的城市加載對應的區域選項
+        var districts = districtsByCity[city];
+        $.each(districts, function(index, district) {
+          districtSelect.append('<option value="' + district + '">' + district + '</option>');
+        });
+      } else {
+        districtSelect.prop('disabled', true);
+        roadSelect.prop('disabled', true);
+      }
+    });
+      // 當選擇區域時，更新路段選單
+      $('#district').change(function() {
+        var district = $(this).val();
+        var roadSelect = $('#road');
+        roadSelect.empty(); // 清空路段選單
+        roadSelect.append('<option value="">請選擇路段</option>');
+
+        if (district !== '') {
+          roadSelect.prop('disabled', false);
+          // 根據選擇的區域加載對應的路段選項
+          var roads = roadsByDistrict[district];
+          $.each(roads, function(index, road) {
+            roadSelect.append('<option value="' + road + '">' + road + '</option>');
+          });
+        } else {
+          roadSelect.prop('disabled', true);
+        }
+      });
+</script>
