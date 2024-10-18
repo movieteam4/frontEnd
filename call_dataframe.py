@@ -116,6 +116,7 @@ def remove_space(x):
     x=x.translate(translation_table)
     return x
 def call_dataframe():
+    import threading
     import mysql.connector
     import pandas as pd
     db_config = {
@@ -128,6 +129,7 @@ def call_dataframe():
     connection = mysql.connector.connect(**db_config)
     if connection.is_connected():
         print("成功連接到 MariaDB 資料庫")
+
     cursor=connection.cursor()
     cursor.execute('SELECT * FROM movies_html ORDER BY id DESC LIMIT 1')
     result=cursor.fetchall()
@@ -156,99 +158,99 @@ def call_dataframe():
     #             final_data[col][(final_data[col].isna()) & (final_data['中文片名'].str.contains(ch_name,case=False))]=final_data[col][(final_data[col].isna()) & (final_data['中文片名'].str.contains(ch_name,case=False))].fillna(value=to_fill[[col,'中文片名']][to_fill['中文片名']==ch_name].iloc[0][col])
     return final_data
 def week_ranking(final_data):
-    from selenium import webdriver
-    from selenium.webdriver.chrome.options import Options
-    from selenium.webdriver.support.wait import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-    from selenium.webdriver.common.by import By
+    # from selenium import webdriver
+    # from selenium.webdriver.chrome.options import Options
+    # from selenium.webdriver.support.wait import WebDriverWait
+    # from selenium.webdriver.support import expected_conditions as EC
+    # from selenium.webdriver.common.by import By
     from bs4 import BeautifulSoup
     import pandas as pd
     from datetime import datetime
-    import os
-    import traceback
+    # import os
+    # import traceback
     ranking_error='排行榜 程式完美'
     ranking_data =''
     #排行榜網頁
-    front_page_web = "https://boxofficetw.tfai.org.tw/statistic/"
+    # front_page_web = "https://boxofficetw.tfai.org.tw/statistic/"
     # Week/100/0/all/False/ReleaseDate/2024-10-04 #周/顯示數量/第幾頁/all/逆排序/主要排序依據/日期
     # 日期
     date = datetime.now().date()
     # 統計方式
     # statistical_method = ["week", "month"]
-    try:
-            s="week"
-            # 建立list
-            l_name = []
-            l_release_time = []
-            l_little_money = []
-            l_little_ticket = []
-            l_all_money = []
-            l_all_ticket = []
-            # 寫入要搜尋的url資訊
-            url = front_page_web + s + "/100/0/all/False/ReleaseDate/" + str(date)
-            # 使用動態抓取,並用隱性等待駛往詹資訊完整抓取資料
-            chrome_options = webdriver.ChromeOptions()
-            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-            chrome_options.add_argument("--headless") #無頭模式
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--window-size=1920,1080")
-            from selenium.webdriver.chrome.service import Service
-            service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
-            driver = webdriver.Chrome(service=service, options=chrome_options)
-            # driver = webdriver.Chrome()
-            driver.get(url)
-            driver.implicitly_wait(10)
-            # 顯性等待最多40秒，每0.8秒尋找一次，於等待時間內尋找特定的字串出现。
-            WebDriverWait(driver, 40, 0.8).until(EC.presence_of_element_located((By.CLASS_NAME, "nowrap.ordered")))
-            ranking_html = driver.page_source
-            ranking_soup = BeautifulSoup(ranking_html,"html.parser")
-            f_lists = ranking_soup.select("div.statistic-table-container tbody > tr") #找到排名表格列表位置
-            for m_list in f_lists: #依排名表格儲存資料
-                f_name = m_list.select("td.left.min-60")[0] # 電影名字
-                f_release_time = m_list.select("td.nowrap.ordered")[0] # 上映日
-                f_all_money = m_list.select("td.right")[7] # 總累積金額
-                f_all_ticket = m_list.select("td.right")[8] # 總票房
-                l_name.append(f_name.text)
-                l_release_time.append(f_release_time.text)
-                l_all_money.append(f_all_money.text)
-                l_all_ticket.append(f_all_ticket.text)
-                f_little_money = m_list.select("td.right")[1] # 當周金額
-                f_little_ticket = m_list.select("td.right")[3] # 當周票房
-                l_little_money.append(eval(f_little_money.text.replace(',','')))
-                l_little_ticket.append(eval(f_little_ticket.text.replace(',','')))
-                print("中文片名 :",f_name.text)
-                print("上映日 :",f_release_time.text)
-                print("當周金額 :"if s == "week" else "當月金額 :",f_little_money.text)
-                print("當周票房數 :"if s == "week" else "當月金額票房數 :",f_little_ticket.text)
-                print("總金額 :",f_all_money.text)
-                print("總票房 :",f_all_ticket.text)
-                print()
-            if s == "week": #紀錄當周排行
-                ranking_week_data = pd.DataFrame({
-                                        "中文片名" : l_name,
-                                        "上映日" : l_release_time,
-                                        "當周金額" : l_little_money,
-                                        "當周票房數" :l_little_money ,
-                                        "總金額" : l_all_money,
-                                        "總票房" : l_all_ticket,
-                                        })
-                # ranking_week_data.to_csv("當周排行.csv", encoding="big5")
-            # elif s == "month":#紀錄當月排行
-            #     ranking_month_data = pd.DataFrame({
-            #                             "中文片名" : l_name,
-            #                             "上映日" : l_release_time,
-            #                             "當周金額"if s == "week" else "當月金額" : l_little_money,
-            #                             "當周票房數"if s == "week" else "當月金額票房數" :l_little_money ,
-            #                             "總金額" : l_all_money,
-            #                             "總票房" : l_all_ticket,
-            #                             })
-                # ranking_month_data.to_csv("當月排行.csv",encoding="big5")
+    # try:
+    #         s="week"
+    #         # 建立list
+    #         l_name = []
+    #         l_release_time = []
+    #         l_little_money = []
+    #         l_little_ticket = []
+    #         l_all_money = []
+    #         l_all_ticket = []
+    #         # 寫入要搜尋的url資訊
+    #         url = front_page_web + s + "/100/0/all/False/ReleaseDate/" + str(date)
+    #         # 使用動態抓取,並用隱性等待駛往詹資訊完整抓取資料
+    #         chrome_options = webdriver.ChromeOptions()
+    #         chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    #         chrome_options.add_argument("--headless") #無頭模式
+    #         chrome_options.add_argument("--disable-dev-shm-usage")
+    #         chrome_options.add_argument("--no-sandbox")
+    #         chrome_options.add_argument("--window-size=1920,1080")
+    #         from selenium.webdriver.chrome.service import Service
+    #         service = Service(executable_path=os.environ.get("CHROMEDRIVER_PATH"))
+    #         driver = webdriver.Chrome(service=service, options=chrome_options)
+    #         # driver = webdriver.Chrome()
+    #         driver.get(url)
+    #         driver.implicitly_wait(10)
+    #         # 顯性等待最多40秒，每0.8秒尋找一次，於等待時間內尋找特定的字串出现。
+    #         WebDriverWait(driver, 40, 0.8).until(EC.presence_of_element_located((By.CLASS_NAME, "nowrap.ordered")))
+    #         ranking_html = driver.page_source
+    #         ranking_soup = BeautifulSoup(ranking_html,"html.parser")
+    #         f_lists = ranking_soup.select("div.statistic-table-container tbody > tr") #找到排名表格列表位置
+    #         for m_list in f_lists: #依排名表格儲存資料
+    #             f_name = m_list.select("td.left.min-60")[0] # 電影名字
+    #             f_release_time = m_list.select("td.nowrap.ordered")[0] # 上映日
+    #             f_all_money = m_list.select("td.right")[7] # 總累積金額
+    #             f_all_ticket = m_list.select("td.right")[8] # 總票房
+    #             l_name.append(f_name.text)
+    #             l_release_time.append(f_release_time.text)
+    #             l_all_money.append(f_all_money.text)
+    #             l_all_ticket.append(f_all_ticket.text)
+    #             f_little_money = m_list.select("td.right")[1] # 當周金額
+    #             f_little_ticket = m_list.select("td.right")[3] # 當周票房
+    #             l_little_money.append(eval(f_little_money.text.replace(',','')))
+    #             l_little_ticket.append(eval(f_little_ticket.text.replace(',','')))
+    #             print("中文片名 :",f_name.text)
+    #             print("上映日 :",f_release_time.text)
+    #             print("當周金額 :"if s == "week" else "當月金額 :",f_little_money.text)
+    #             print("當周票房數 :"if s == "week" else "當月金額票房數 :",f_little_ticket.text)
+    #             print("總金額 :",f_all_money.text)
+    #             print("總票房 :",f_all_ticket.text)
+    #             print()
+    #         if s == "week": #紀錄當周排行
+    #             ranking_week_data = pd.DataFrame({
+    #                                     "中文片名" : l_name,
+    #                                     "上映日" : l_release_time,
+    #                                     "當周金額" : l_little_money,
+    #                                     "當周票房數" :l_little_money ,
+    #                                     "總金額" : l_all_money,
+    #                                     "總票房" : l_all_ticket,
+    #                                     })
+    #             # ranking_week_data.to_csv("當周排行.csv", encoding="big5")
+    #         # elif s == "month":#紀錄當月排行
+    #         #     ranking_month_data = pd.DataFrame({
+    #         #                             "中文片名" : l_name,
+    #         #                             "上映日" : l_release_time,
+    #         #                             "當周金額"if s == "week" else "當月金額" : l_little_money,
+    #         #                             "當周票房數"if s == "week" else "當月金額票房數" :l_little_money ,
+    #         #                             "總金額" : l_all_money,
+    #         #                             "總票房" : l_all_ticket,
+    #         #                             })
+    #             # ranking_month_data.to_csv("當月排行.csv",encoding="big5")
 
-    finally:
-        driver.quit()
-    ranking_week_data['中文片名']= ranking_week_data['中文片名'].apply(remove_space)
-    final_data = pd.merge(final_data, ranking_week_data[['中文片名', '當周票房數']], on='中文片名', how='left')
+    # finally:
+    #     driver.quit()
+    # ranking_week_data['中文片名']= ranking_week_data['中文片名'].apply(remove_space)
+    # final_data = pd.merge(final_data, ranking_week_data[['中文片名', '當周票房數']], on='中文片名', how='left')
     final_data=final_data.sort_values(by='當周票房數', ascending=False)
     final_data = final_data.drop_duplicates(subset='中文片名', keep='first')
     # final_data = final_data[['中文片名',"當周金額","當周票房數","總金額","總票房"]].sort_values(by='當周票房數', ascending=False).head(10)
