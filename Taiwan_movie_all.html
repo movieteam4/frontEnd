@@ -45,6 +45,12 @@
   .heart-checkbox input[type="checkbox"]:checked + label i.far.fa-heart {
     display: none;  /* 勾選後隱藏空心愛心 */
   }
+
+  @media (max-width: 992px) {
+    .trending .main-button, .cta::after, .most-played .main-button, .related-games .main-button{
+      display:flex
+    }
+  }
 </style>
 </head>
   <body>
@@ -77,21 +83,21 @@
                   <nav class="main-nav">
                       <!-- ***** Logo Start ***** -->
                       <a href="{% url 'Taiwan_movies_all' %}" class="logo">
-                          <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/logo.png" alt="" style="width: 158px;">
+                          <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/Team4_logo.png" alt="" style="width: 158px;">
                       </a>
                       <!-- ***** Logo End ***** -->
                       <!-- ***** Menu Start ***** -->
                       <ul class="nav">
-                        <li>
+                        {% comment %} <li>
                           <div class="search-input">
-                            <form id="search" action="#">
-                              <input type="text" placeholder="搜尋電影" id="searchText" name="searchKeyword" onkeypress="handle" />
+                            <form id="search" action="{% url 'search' %}">
+                              <input type="text" placeholder="搜尋電影" id="searchText" name="searchKeyword" />
                               <button role="button" style="background-color: white; color: black;">
                                 <i class="fas fa-search" style="font-size: 20px;"></i>
                               </button>
                             </form>
                           </div>
-                        </li>
+                        </li> {% endcomment %}
                         {{status|safe}}
                       </ul>
                         <a class='menu-trigger'>
@@ -112,12 +118,12 @@
               <h5>Welcome to Team 4</h5>
               <h2>本周銷售第一:<br>{{number_1_name}}</h2>
               <h6>{{number_1_name_eng}}</h6>
-              <p>{{description}}<a href="/Taiwan_movies_all/shop/?m={{number_1_name}}" style="color:black">more</a></p>
+              <p>{{description}}<a href="/Taiwan_movies_all/more_detail/?m={{number_1_name}}" style="color:black">more</a></p>
             </div>
           </div>
           <div class="col-lg-4 offset-lg-2">
             <div class="right-image">
-              <img src="{{number_1}}" alt="">
+              <a href="https://taiwan-movies-36c4c3ac2ec6.herokuapp.com/Taiwan_movies_all/more_detail/?m={{number_1_name}}"> <img src="{{number_1}}" alt=""></a>
             </div>
           </div>
         </div>
@@ -158,12 +164,12 @@
             </a>
           </div>
           <div class="col-lg-3 col-md-6">
-            <a href="{% url 'about_us' %}">
+            <a href="{% url 'forum' %}">
               <div class="item">
                 <div class="image">
                   <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/featured-04.png" alt="" style="max-width: 44px;">
                 </div>
-                <h4>關於我們</h4>
+                <h4>論壇</h4>
               </div>
             </a>
           </div>
@@ -174,13 +180,13 @@
     <div class="section trending">
       <div class="container">
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-6 col-lg-6">
             <div class="section-heading">
               <h6>Trending</h6>
               <h2>Trending Movies</h2>
             </div>
           </div>
-          <div class="col-lg-6">
+          <div class="col-6 col-lg-6">
             <div class="main-button">
               <a href="shop">熱映中的電影</a>
             </div>

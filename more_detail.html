@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-TW">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/isotope/3.0.6/isotope.pkgd.min.js"></script>
+    <title>{% block title %}Lugx Gaming - Shop Page{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/templatemo-lugx-gaming.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/owl.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <!-- TemplateMo 589 lugx gaming -->
+    {% if detail %}
+    <script type="text/javascript">
+        alert("{{detail}}");
+    </script>
+  {% endif %}
+    <style>
+      .heart-checkbox input[type="checkbox"] {
+        display: none;  /* 隱藏默認的checkbox */
+      }
+
+      .heart-checkbox label {
+        position: relative;
+        font-size: 25px;
+        cursor: pointer;
+        color: #ff4081;  /* 愛心顏色 */
+      }
+
+      .heart-checkbox label i.fas.fa-heart {
+        display: none;  /* 初始狀態，隱藏實心愛心 */
+      }
+
+      .heart-checkbox input[type="checkbox"]:checked + label i.fas.fa-heart {
+        display: inline;  /* 勾選後顯示實心愛心 */
+      }
+
+      .heart-checkbox input[type="checkbox"]:checked + label i.far.fa-heart {
+        display: none;  /* 勾選後隱藏空心愛心 */
+      }
+
+      .row span:not(.star) {font-weight: bold;
+        color: #ff69b4;
+         font-size: 24px;
+         text-transform: capitalize
+        }
+        #comments-section h2 {
+          position: sticky;  /* 使標題固定 */
+          top: 0;            /* 固定在頂部 */
+          background-color: #fff; /* 設定背景色，避免和後面的內容混在一起 */
+          z-index: 10;       /* 確保標題在最上層 */
+          padding: 10px 0;    /* 增加一些內邊距，使標題顯得更清晰 */
+          margin: 0;
+          border-bottom: 1px solid #ccc; /* 可選：加一條邊框與留言區分 */
+      }
+
+      #comments-list {
+          max-height: 400px;   /* 設置留言區最大高度，讓它能滾動 */
+          overflow-y: auto;    /* 當內容超過最大高度時，顯示垂直滾動條 */
+          padding-left: 0;     /* 移除列表的內邊距 */
+      }
+
+      #comments-list li {
+          margin-bottom: 10px; /* 每條留言的底部留空隙 */
+          padding: 10px;
+          border-bottom: 1px solid #f0f0f0; /* 每條留言的邊框 */
+      }
+
+      #comments-list li:last-child {
+          border-bottom: none; /* 最後一條留言去掉邊框 */
+      }
+
+
+      @media (max-width: 1000px) {
+        textarea {
+          width: 100%; /* 手機上設置為 100% */
+          box-sizing: border-box; /* 確保內邊距計入寬度 */
+        }
+      }
+
+      .show_movie_img {
+        width: 400px; /* 桌面顯示寬度 */
+        height: 600px; /* 桌面顯示高度 */
+      }
+
+      @media (max-width: 600px) {
+        .show_movie_img {
+          width: 100%; /* 手機顯示寬度為 100% */
+          height: auto; /* 高度自動，以保持比例 */
+        }
+      }
+
+      .container3 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px; /* 使用最小高度以改善滾動問題 */
+        width: 100%;
+      }
+
+      .responsive-iframe {
+        width: 100%; /* 手機上寬度設為 100% */
+        height: auto; /* 高度自動，以保持比例 */
+        aspect-ratio: 16 / 9; /* 保持 16:9 比例 */
+      }
+
+      /* 媒體查詢 */
+      @media (min-width: 1000px) {
+        .responsive-iframe {
+          width: 1800px; /* 桌面顯示的寬度 */
+          height: 800px; /* 桌面顯示的高度 */
+        }
+      }
+
+      .row.row2 span {
+        display: block;
+        width: 100%; /* 使容器寬度為 100% */
+        padding: 10px; /* 增加內邊距 */
+        box-sizing: border-box; /* 包含內邊距和邊框在寬度內 */
+      }
+
+      /* 媒體查詢 */
+      @media (max-width: 600px) {
+        .row.row2 span  {
+          display: block;
+          font-size: 0.8rem; /* 手機上字體稍小 */
+          padding: 8px; /* 減少內邊距 */
+        }
+      }
+
+      @media (min-width: 601px) and (max-width: 992px) {
+        .row.row2 span  {
+          display: block;
+          font-size: 1rem; /* 平板上保持基本字體大小 */
+          padding: 10px; /* 標準內邊距 */
+        }
+      }
+
+      @media (min-width: 993px) {
+        .row.row2 span  {
+          display: block;
+          font-size: 1.2rem; /* 桌面上字體稍大 */
+          padding: 12px; /* 增加內邊距 */
+        }
+      }
+
+      .star:not(.checked) {
+        font-size: 35px;
+        color: rgba(211, 211, 211, 1);
+        cursor: pointer;
+        display: flex;
+        margin: 0px;
+        font-size: 2.0rem; /* 星星之間的間距 */
+
+    }
+    .star.checked {
+        color: #fabb05;
+        cursor: pointer;
+    }
+
+    .star-rating {
+      display: flex; /* 使用 Flexbox 讓星星在同一排 */
+      align-items: center; /* 垂直置中對齊 */
+  }
+
+
+      @media (max-width: 600px) {
+      .star {
+        font-size: 35px;
+        color: #d3d3d3;
+        cursor: pointer;
+        display: flex;
+        margin: 0px; /* 星星之間的間距 */
+
+    }
+    .star.checked {
+        color: #fabb05;
+        cursor: pointer;
+    }
+      }
+    </style>
+    </head>
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      const preloader = document.getElementById('js-preloader');
+      if (preloader) {
+        preloader.style.display = 'none'; // Hide the preloader
+      }
+    }
+  </script>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url 'Taiwan_movies_all' %}" class="logo">
+                        <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/Team4_logo.png" alt="" style="width: 158px;">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                      <li><a href="{% url 'Taiwan_movies_all' %}">Home</a></li>
+                      <li><a href="{% url 'about_us' %}">關於我們</a></li>
+                      {% if status == 'signed_in' %}
+                      <li><a href="https://taiwan-movies-36c4c3ac2ec6.herokuapp.com/Taiwan_movies_all/user_more"><i class="fas fa-user"></i>{{name}}</a></li>
+                      <li><a href="https://taiwan-movies-36c4c3ac2ec6.herokuapp.com/Taiwan_movies_all/more_detail/?m={{movie_name}}&status=Sign_out">Sign Out</a></li>
+                      {% endif %}
+                      {% if status == 'signed_out' %}
+                      <li><a href="{% url 'hello' %}">Sign In</a></li>
+                      {% endif %}
+                    </ul>
+                    <a class="menu-trigger">
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="page-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3>{{movie_name}}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <body>
+    <div class="container3">
+      <iframe class="responsive-iframe" src="{{youtube}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  <div class="row row2 d-flex align-items-center">
+    <div class="col-12 col-lg-5 offset-lg-1 align-self-center">
+      <div class="caption header-text">
+        <table style="width: 100%;">
+        <tr>
+        <td style="vertical-align: top;"><img class="show_movie_img" src="{{img}}" alt="Movie Image"></td>
+        <td style="vertical-align: top;"><span class="info-container"><div class="heart-checkbox {ch_name}">
+          <input type="checkbox" id="heart-checkbox{{movie_name}}" data-movie-title="{{movie_name}}" {{check}} />
+          <label for="heart-checkbox{{movie_name}}" {% if 'signed_out' in status %} onclick="alert('請先登入！'); return false ;" {% endif%}>
+            <i class="far fa-heart" id="img_heart"></i>  <!-- 空心愛心 -->
+            <i class="fas fa-heart"></i>  <!-- 實心愛心 -->
+          </label>
+        </div>
+        中文片名:{{movie_name}}<br>英文片名:{{eng_name}}<br>導演:{{director}}<br>演員:{{actors}}<br>上映日:{{release_date}}</span>
+        {% if personal_rating %}
+        <span id="rating-text">你給了{{personal_rating}}星</span>
+        {% else %}
+        <span id="rating-text">你還沒給星星</span>
+        {% endif %}
+        {% if average_rating %}
+        <span id="avg-rating">平均為{{average_rating}}星</span>
+        {% else %}
+        <span id="avg-rating">還沒有任何評價</span>
+        {% endif %}
+          <span class="info-container" style="display: block; word-wrap: break-word;"><select id="cinema-group-select" name="cinema">
+            <option value="">請選擇影城</option>
+            {% for cinema in cinema_group %}
+            <option value="{{cinema}}">{{cinema}}</option>
+            {% endfor %}
+          </select>
+          <br>
+          <select id="cinema-select" name="cinema" disabled>
+          <option value="">請選擇電影院</option>
+          {% for cinema in cinema_list %}
+          <option value="{{cinema}}">{{cinema}}</option>
+          {% endfor %}
+        </select>
+        <br>
+        <!-- 第三個選單：放映日期 -->
+        <select id="date-select" name="date" disabled>
+          <option value="">請選擇放映日期</option>
+        </select>
+         <!-- 顯示撥放時間 -->
+         <div id="time-display"></div>
+        </span>
+        </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6  align-self-center">
+    <div class="caption header-text">
+      <!-- 顯示所有留言 -->
+    <div id="comments-section">
+      <h2>評論區</h2>
+      <ul id="comments-list">
+          <!-- 留言將會在這裡被動態插入 -->
+          {% if mass_obj %}
+          {% for mass in mass_obj %}
+          <li>
+            <div id="comment_{{mass.id}}">
+              <strong>{% if mail == mass.mail %} 你的留言: {% else %} {{ mass.name }}: {% endif %}</strong>
+              <p>{{ mass.what_manage }}</p>
+              <em style="font-size: 10px; opacity: 0.7;">{{ mass.creat_at }}</em>
+              {% if mail == mass.mail %}
+              <button onclick="deleteComment({{ mass.id }})">刪除留言</button>
+              <button onclick="editComment({{ mass.id }})">編輯</button>
+            </div>
+              <div id="edit_form_{{mass.id}}" style="display:none;">
+                    <label for="edit_comment_{{mass.id}}">編輯：</label>
+                    <input type="text" id="edit_textarea_{{mass.id}}" name="edit_comment" value="{{mass.what_manage}}">
+                    <button type="button" onclick="saveEdit({{mass.id}})">提交</button>
+                    <button type="button" onclick="hideEditForm({{mass.id}})">取消</button>
+              </div>
+              {% endif %}
+          </li>
+          {% endfor %}
+          {% else %}
+          <li class='no_comment'>目前沒有留言</li>
+          {% endif %}
+      </ul>
+  </div>
+
+  <div class="star-rating" style="width:30%">
+    {% if personal_rating >= 1 %}
+    <span class="star checked" data-htmlrating="1" style="font-size:2rem;">&#9733;</span>
+    {% else %}
+    <span class="star" data-htmlrating="1" style="font-size:2rem;">&#9733;</span>
+    {% endif %}
+    {% if personal_rating >= 2 %}
+    <span class="star checked" data-htmlrating="2" style="font-size:2rem">&#9733;</span>
+    {% else %}
+    <span class="star" data-htmlrating="2" style="font-size: 2rem">&#9733;</span>
+    {% endif %}
+    {% if personal_rating >= 3 %}
+    <span class="star checked" data-htmlrating="3" style="font-size:2rem">&#9733;</span>
+    {% else %}
+    <span class="star" data-htmlrating="3" style="font-size: 2rem">&#9733;</span>
+    {% endif %}
+    {% if personal_rating >= 4 %}
+    <span class="star checked" data-htmlrating="4" style="font-size:2rem">&#9733;</span>
+    {% else %}
+    <span class="star" data-htmlrating="4" style="font-size: 2rem">&#9733;</span>
+    {% endif %}
+    {% if personal_rating >= 5 %}
+    <span class="star checked" data-htmlrating="5" style="font-size:2rem">&#9733;</span>
+    {% else %}
+    <span class="star" data-htmlrating="5" style="font-size: 2rem">&#9733;</span>
+    {% endif %}
+
+</div>
+       <!-- 留言表單 -->
+       <div class="col-12 col-lg-6  align-self-center" id="comment-form">
+        <form id="new-comment-form" method="POST">
+            {% csrf_token %}
+            <label for="author">{{e_mail}}</label>
+            <input type="hidden" name="movieName" value="{{movie_name}}">
+
+
+            <label for="content">發表評論:</label><br>
+            <textarea name="massage" id="massage" rows="4" cols="50" required></textarea><br>
+
+            <button type="submit"  {% if 'signed_out' in status %} onclick="alert('請先登入！'); return false ;" {% endif%}>提交</button>
+        </form>
+    </div>
+
+    </div>
+  </div>
+</div>
+<!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/isotope.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/owl-carousel.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/counter.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/custom.js"></script>
+  <script type="text/javascript">
+    // 將 CSRF 令牌存儲在 JavaScript 變量中
+    const csrftoken = '{{ csrf_token }}';
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+
+          // 當影城選擇改變時發送 AJAX 請求獲取對應電影院
+          $('#cinema-group-select').change(function() {
+            var cinema_group = $(this).val();
+            var movieName = "{{movie_name}}";
+            if (cinema_group !== '') {
+              const preloader = document.getElementById('js-preloader');
+              if (preloader) {
+                preloader.style.display = 'flex';
+                preloader.style.opacity=1;
+                preloader.style.visibility="visible";
+                preloader.style.justifycontent= 'center';
+                preloader.style.alignitems='center'; // show the preloader
+              }
+
+              $.ajax({
+                url: '{% url "get_cinemas" %}', // Django URL
+                method: 'GET',
+                data: { 'back_movie': movieName, 'back_cinema_group': cinema_group },
+                success: function(response) {
+                  $('#cinema-select').empty().prop('disabled', false); // 清空並啟用日期選單
+                  $('#cinema-select').append('<option value="">請選擇電影院</option>');
+                  $.each(response.cinemas, function(index, cinema) {
+                    $('#cinema-select').append('<option value="' + cinema + '">' + cinema + '</option>');
+                  });
+                },
+                complete: function() {
+                  preloader.style.display = 'none';
+                  preloader.style.opacity=0;
+                  preloader.style.visibility="hidden" // 請求完成後隱藏 preloader
+                }
+              });
+            } else {
+              $('#date-select').empty().prop('disabled', true); // 清空日期選單
+            }
+          });
+
+          // 當電影院選擇改變時發送 AJAX 請求獲取對應放映日期
+          $('#cinema-select').change(function() {
+            var cinemaName = $(this).val();
+            var movieName = "{{movie_name}}";
+            if (cinemaName !== '') {
+              const preloader = document.getElementById('js-preloader');
+              if (preloader) {
+                preloader.style.display = 'flex';
+                preloader.style.opacity=1;
+                preloader.style.visibility="visible";
+                preloader.style.justifycontent= 'center';
+                preloader.style.alignitems='center'; // show the preloader
+              }
+
+              $.ajax({
+                url: '{% url "get_dates" %}', // Django URL
+                method: 'GET',
+                data: { 'back_movie': movieName, 'back_cinema': cinemaName },
+                success: function(response) {
+                  $('#date-select').empty().prop('disabled', false); // 清空並啟用日期選單
+                  $('#date-select').append('<option value="">請選擇放映日期</option>');
+                  $.each(response.dates, function(index, date) {
+                    var truncatedDate = date.substring(0, 10);
+                    $('#date-select').append('<option value="' + date + '">' + truncatedDate + '</option>');
+                  });
+                },
+                complete: function() {
+                  preloader.style.display = 'none';
+                  preloader.style.opacity=0;
+                  preloader.style.visibility="hidden" // 請求完成後隱藏 preloader // 請求完成後隱藏 preloader
+                }
+              });
+            } else {
+              $('#date-select').empty().prop('disabled', true); // 清空日期選單
+            }
+          });
+
+          // 當選擇日期時直接提交表單，發送時刻表請求
+          $('#date-select').change(function(event) {
+            var date = $(this).val();
+            var cinemaName = $('#cinema-select').val();
+            var movieName = "{{movie_name}}";
+            var truncatedDate = date.substring(0, 10);
+            if (date !== '') {
+              const preloader = document.getElementById('js-preloader');
+              if (preloader) {
+                preloader.style.display = 'flex';
+                preloader.style.opacity=1;
+                preloader.style.visibility="visible";
+                preloader.style.justifycontent= 'center';
+                preloader.style.alignitems='center'; // show the preloader
+              }
+
+                $.ajax({
+                    url: '{% url "get_times" %}',  // Django URL
+                    method: 'GET',
+                    data: {
+                        'back_movie': movieName,
+                        'back_cinema': cinemaName,
+                        'back_date': date
+                    },
+                    success: function(response) {
+                        $('#time-display').html(''); // 清空播放时间显示
+                        $('#time-display').append('<p>' + cinemaName + '</p>' + '<p>' + truncatedDate + '</p>' + '<p>放映時間</p>');
+                        $.each(response.times, function(index, time) {
+                            var type = response.types[index];
+                            var link = response.links[index];
+                            $('#time-display').append('<a href="' + link + '" style="text-decoration: underline;"> <p><i class="fa fa-clock"></i>' + time + '&nbsp;' + '<i class="fa fa-film"></i>' + type + '</p></a>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching times:", error);
+                        $('#time-display').html('<p>發生錯誤，請稍後再試</p>');
+                    },
+                    complete: function() {
+                      preloader.style.display = 'none';
+                      preloader.style.opacity=0;
+                      preloader.style.visibility="hidden" // 請求完成後隱藏 preloader // 請求完成後隱藏 preloader
+                    }
+                });
+            } else {
+                $('#time-display').html('<p>請先選擇放映日期</p>');
+            }
+        });
+
+        $(document).ready(function() {
+          // 監聽每個 checkbox 的變化
+
+          $('input[type="checkbox"]').on('change', function() {
+            var checkboxId = $(this).attr('id');        // 取得勾選框的 id
+            var isChecked = $(this).prop('checked');    // 判斷是否勾選
+            var movieTitle = $(this).data('movie-title'); // 取得電影的中文名稱
+
+            // 發送 AJAX 請求
+            $.ajax({
+              url: "{% url 'handle' %}",  // 替換成後端的 URL
+              method: 'POST',  // 使用 POST 方法
+              data: {
+                'id': checkboxId,        // 傳送 checkbox 的 ID
+                'liked': isChecked,      // 傳送勾選狀態 (true 或 false)
+                'movie_title': movieTitle,
+                'csrfmiddlewaretoken': csrftoken // 傳送電影名稱
+              },
+              success: function(response) {
+                // 可以在這裡處理成功回調
+                console.log('Data saved successfully:', response);
+              },
+              error: function(error) {
+                // 可以在這裡處理錯誤回調
+                console.error('Error saving data:', error);
+              }
+            });
+          });
+        });
+      </script>
+      <script type="text/javascript">
+        $(document).ready(function() {
+            $('#new-comment-form').on('submit', function(event) {  //選擇表單  點擊提交
+                event.preventDefault();    //阻止表單加載頁面(不用換網址)
+
+                // 獲取表單數據
+                var formData = {
+                    'movieName': $('input[name="movieName"]').val(),  //獲取隱藏的電影名稱的值
+                    'massage': $('#massage').val(),      //獲取使用者輸入在textarea的值
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                };
+
+                // 發送 AJAX 請求
+                $.ajax({
+                    url: "{% url 'massage123' %}",
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            // 成功後 新增留言
+                            $('.no_comment').text('')
+                            $('#comments-list').append(
+            `
+            <li>
+              <div id="comment_${response.id}">
+                <strong>你的留言:</strong><br>
+                <p>${response.massage}</p>
+                <em style="font-size: 10px; opacity: 0.7;">${response.created_at}</em>
+                 <button onclick="deleteComment(${response.id})">刪除留言</button>
+                <button onclick="editComment(${response.id})">編輯</button>
+              </div>
+                <div id="edit_form_${response.id}" style="display:none;">
+                    <label for="edit_comment_${response.id}">編輯：</label>
+                    <input type="text" id="edit_textarea_${response.id}" name="edit_comment" value="${response.massage}">
+                    <button type="button" onclick="saveEdit(${response.id})">提交</button>
+                    <button type="button" onclick="hideEditForm(${response.id})">取消</button>
+
+              </div>
+            </li>`
+        );
+                            // 清空表單
+                            $('#massage').val('');
+                        } else {
+                            alert(response.error);
+                        }
+                    },
+                    error: function(xhr) {
+                        const errorMessage = xhr.responseJSON ? xhr.responseJSON.error : '發生錯誤，請稍後再試';
+                        alert(errorMessage);
+                    }
+                });
+            });
+        });
+
+
+    // 删除留言
+    function deleteComment(commentId) {
+      if (confirm("确定删除此留言吗?")) {
+          // 发送 AJAX 请求到后端删除该留言
+          fetch(`/delete_comment/${commentId}/`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': getCookie('csrftoken')  // 发送 CSRF Token
+              },
+              body: JSON.stringify({ id: commentId })
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  document.getElementById('comment_' + commentId).remove();  // 从页面中移除评论
+              } else {
+                  alert("删除失败！");
+              }
+          });
+      }
+  }
+
+  // 编辑留言
+  function editComment(commentId) {
+      // 隐藏评论文本，显示编辑框
+      document.getElementById('comment_' + commentId).style.display = 'none';
+      document.getElementById('edit_form_'+commentId).style.display = 'block';
+  }
+
+  // 保存编辑后的留言
+  function saveEdit(commentId) {
+    // 获取用户输入的评论内容
+    var updatedText = $('#edit_textarea_' + commentId).val();
+
+    // 构造要发送的表单数据
+    var formData = {
+        'comment_id': commentId,
+        'new_text': updatedText,  // 用户输入的评论内容
+        'csrfmiddlewaretoken': '{{ csrf_token }}'  // CSRF 令牌
+    };
+
+    // 发送 AJAX 请求到后端更新留言
+    $.ajax({
+        url: `{% url "edit_comment" %}`,  // 确保这里的 URL 正确
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                // 更新页面上的评论内容
+                document.getElementById('comment_' + commentId).innerHTML = response.res
+                document.getElementById('edit_form_' + commentId).style.display = 'none';  // 隐藏编辑框
+                document.getElementById('comment_' + commentId).style.display = 'block';
+            } else {
+                alert("保存失败：" + response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX 请求失败：', status, error);
+            alert("发生错误，请重试！");
+        }
+    });
+}
+
+
+
+  // 取消编辑
+  function hideEditForm(commentId) {
+      document.getElementById('edit_form_' + commentId).style.display = 'none';
+      document.getElementById('comment_text_' + commentId).style.display = 'block';
+  }
+
+  // 获取 CSRF Token
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+
+  $(document).ready(function() {
+    var userMail = "{{ mail }}";
+    // 當星星被碰到時，將相應的星星和之前的星星標記為已選中
+    $('.star').on('click', function() {
+        if ( userMail === ''){
+          alert('請先登入!');
+          return
+          }
+
+        var rating = $(this).data('htmlrating'); // 獲取選中的星級
+        $('#rating-text').text("你給了"+rating+"星"); // 更新顯示的星級
+        // 清除所有星星的 checked 樣式
+        $('.star').removeClass('checked');
+        // 添加 checked 樣式至選中的星級及之前的星星
+        $('.star').each(function(index) {
+            if (index < rating) {
+                $(this).addClass('checked');
+            }
+        });
+        $.ajax({
+          url: "{% url 'star' %}", // 替換為你的後端路徑
+          type: 'POST', // 使用 POST 方法
+          data: {
+              rating: rating, // 將評分作為數據發送
+              movie:'{{movie_name}}',
+              'csrfmiddlewaretoken': csrftoken
+          },
+          success: function(response) {
+              // 可以根據需要處理回應
+              console.log('成功:', response);
+              $('#avg-rating').text('平均為'+response.average_rating+'星')
+          },
+          error: function(xhr, status, error) {
+              // 錯誤處理
+              console.error('發送失敗:', error);
+          }
+      });
+
+    });
+});
+    </script>

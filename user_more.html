@@ -54,12 +54,12 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="{% url 'Taiwan_movies_all' %}" class="logo">
-                            <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/logo.png" alt="" style="width: 158px;">
+                            <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/Team4_logo.png" alt="" style="width: 158px;">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                          <li>
+                          {% comment %} <li>
                             <div class="search-input">
                               <form id="search" action="#">
                                 <input type="text" placeholder="電影搜尋" id='searchText' name="searchKeyword" onkeypress="handle" />
@@ -68,7 +68,7 @@
                                 </button>
                               </form>
                             </div>
-                          </li>
+                          </li> {% endcomment %}
                           <li><a href="{% url 'Taiwan_movies_all' %}">Home</a></li>
                         </ul>
                         <a class='menu-trigger'>
@@ -148,7 +148,7 @@
               </div>
             </div>
             <div class="col-lg-6 align-self-center" style="margin-top: 50px;">
-                    <div class="form-row">
+                    <div class="sss">
                       <label for="id_favorite_cinema">最常去的影城：</label>
                       <select name="favorite_cinema" id="id_favorite_cinema">
                         <option value="no_data" {% if favorite_cinema == 'no_data' %}selected{% endif %}></option>
@@ -160,7 +160,7 @@
                         <option value="mira"  {% if favorite_cinema == 'mira' %}selected{% endif %}>大直美麗華</option>
                     </select>
 
-                    <div class="form-row">
+                    <div class="sss">
                         <label for="id_marital_status">婚姻狀況：</label>
                         <select name="marital_status" id="id_marital_status">
                             <option value="no_data" {% if marital_status == 'no_data' %}selected{% endif %}></option>
@@ -169,7 +169,7 @@
                         </select>
                     </div>
 
-                    <div class="form-row">
+                    <div class="sss">
                         <label for="id_household_income">年收入：</label>
                         <select name="household_income" id="id_household_income">
                             <option value="no_data"  {% if household_income == 'no_data' %}selected{% endif %}></option>
@@ -182,7 +182,7 @@
                       </select>
                     </div>
 
-                    <div class="form-row">
+                    <div class="sss">
                       <label for="id_sex">性別：</label>
                       <select name="sex" id="id_sex">
                           <option value="no_data"  {% if sex == 'no_data' %}selected{% endif %}></option>
@@ -192,7 +192,7 @@
                       </select>
                   </div>
 
-                  <div class="form-row">
+                  <div class="sss">
                     <label for="id_education">教育程度：</label>
                     <select name="education" id="education">
                       <option value="no_data"  {% if education == 'no_data' %}selected{% endif %}></option>
@@ -204,7 +204,7 @@
                       <option value="doctoral" {% if education == 'doctoral' %}selected{% endif %}>博士班</option>
                   </select>
                 </div>
-                    <div class="form-row">
+                    <div class="sss">
                       <label for="id_favorite_genres">喜好電影類型：</label>
                       <div id="favorite_genres">
                           <label><input type="checkbox" name="f_genres" value="Action"  {% if "Action" in favorite_genres %}checked{% endif %}> 動作片</label>
@@ -226,7 +226,7 @@
                       </div>
                     </div>
 
-                    <div class="form-row">
+                    <div class="sss">
                       <label for="id_preferences">喜好的座位：</label>
                       <div id="preferences">
                         <label><input type="checkbox" name="seat" value="aisle" {% if "aisle" in seat %}checked{% endif %}> 靠走道</label>
@@ -262,7 +262,7 @@
 
               /* Optional: For specific mobile or small screens */
               @media (max-width: 768px) {
-                  .form-row label {
+                .form-row.form-row label {
                       width: 100%; /* 在小屏幕上讓 label 垂直顯示 */
                       margin-bottom: 10px;
                   }
@@ -279,12 +279,20 @@
                 opacity: 1;
             }
             label {
-              white-space: nowrap;  /* 防止文字換行 */
+              white-space: nowrap;
+              margin-bottom:25px; /* 防止文字換行 */
           }
           #id_address {
             width: calc(100% - 160px);  /* 計算寬度，減去 160px */
         }
               </style>
+<script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/isotope.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/owl-carousel.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/counter.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/custom.js"></script>
+<script type="text/javascript">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   var districtsByCity = {{dict_town|safe}}; // 載入市區字典

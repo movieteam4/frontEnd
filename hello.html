@@ -19,6 +19,18 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/animate.css">
    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
    <!-- TemplateMo 589 lugx gaming -->
+   <style>
+    @media (max-width: 1000px) {
+      .no_display_on_phone {
+        display:none
+      }
+    }
+  </style>
+   {% if detail %}
+   <script type="text/javascript">
+       alert("{{detail}}");
+   </script>
+ {% endif %}
   </head>
 
   <body>
@@ -49,12 +61,12 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="{% url 'Taiwan_movies_all' %}" class="logo">
-                            <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/logo.png" alt="" style="width: 158px;">
+                            <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/Team4_logo.png" alt="" style="width: 158px;">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                          <li>
+                          {% comment %} <li>
                             <div class="search-input">
                               <form id="search" action="#">
                                 <input type="text" placeholder="電影搜尋" id='searchText' name="searchKeyword" onkeypress="handle" />
@@ -63,7 +75,7 @@
                                 </button>
                               </form>
                             </div>
-                          </li>
+                          </li> {% endcomment %}
                           <li><a href="{% url 'Taiwan_movies_all' %}">Home</a></li>
                         </ul>
                         <a class='menu-trigger'>
@@ -79,7 +91,7 @@
       <div class="main-banner">
         <div class="container">
           <div class="row">
-            <div class="col-lg-6 align-self-center">
+            <div class="col-12 col-lg-6 align-self-center">
               <div class="caption header-text">
                 <h5>登入會員</h5>
                 <form action="{% url 'hello' %}" method="POST">
@@ -89,7 +101,6 @@
                   <br>
                   <input type="password" name="password" value="{{password}}" placeholder="輸入密碼" style="font-size: 12px; padding: 10px 20px; font-family: 'Poppins', sans-serif; margin-bottom: 20px; width: 50%; height : 30px">
                   <br>
-                  <div style="display: flex; gap: 10px;">
                     <input type="submit" name="log_in" value="登入" style="font-size: 20px; padding: 15px 20px; text-align: center; line-height: 0px; font-family: 'Poppins', sans-serif; flex: none;">
                 </form>
                 <form action="{% url 'hello' %}" method="POST">
@@ -97,19 +108,25 @@
                   <input type="hidden" name="where_from" value="create_account">
                   <input type="submit" name="create_account" value="建立帳號" style="font-size: 20px; padding: 15px 20px; text-align: center; line-height: 0px; font-family: 'Poppins', sans-serif; flex: none;">
                 </form>
-                  </div>
                 </form>
                 <p>登入會員,獲得自動電影推薦!<br>{{detail}}</p>
               </div>
             </div>
-            <div class="col-lg-4 offset-lg-2">
+            <div class=" col-12 col-lg-4 offset-lg-2">
+              <div class='no_display_on_phone'>
               <div class="right-image">
                 <img src="{{number_1}}" alt="">
                 <span class="price">Team&nbsp;4<br>宏碁班第4組專題<br>電影自動化推薦系統</span>
               </div>
             </div>
           </div>
+          </div>
         </div>
       </div>
-
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/bootstrap.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/isotope.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/owl-carousel.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/counter.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/custom.js"></script>
 

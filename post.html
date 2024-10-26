@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-TW">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/isotope/3.0.6/isotope.pkgd.min.js"></script>
+    <title>{% block title %}Lugx Gaming - Shop Page{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/templatemo-lugx-gaming.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/owl.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <!-- TemplateMo 589 lugx gaming -->
+    {% if detail %}
+    <script type="text/javascript">
+        alert("{{detail}}");
+    </script>
+  {% endif %}
+    <style>
+      .heart-checkbox input[type="checkbox"] {
+        display: none;  /* 隱藏默認的checkbox */
+      }
+
+      .heart-checkbox label {
+        position: relative;
+        font-size: 25px;
+        cursor: pointer;
+        color: #ff4081;  /* 愛心顏色 */
+      }
+
+      .heart-checkbox label i.fas.fa-heart {
+        display: none;  /* 初始狀態，隱藏實心愛心 */
+      }
+
+      .heart-checkbox input[type="checkbox"]:checked + label i.fas.fa-heart {
+        display: inline;  /* 勾選後顯示實心愛心 */
+      }
+
+      .heart-checkbox input[type="checkbox"]:checked + label i.far.fa-heart {
+        display: none;  /* 勾選後隱藏空心愛心 */
+      }
+
+      .row span{font-weight: bold;
+        color: #ff69b4;
+         font-size: 24px;
+         text-transform: capitalize
+        }
+        #comments-section h2 {
+          position: sticky;  /* 使標題固定 */
+          top: 0;            /* 固定在頂部 */
+          background-color: #fff; /* 設定背景色，避免和後面的內容混在一起 */
+          z-index: 10;       /* 確保標題在最上層 */
+          padding: 10px 0;    /* 增加一些內邊距，使標題顯得更清晰 */
+          margin: 0;
+          border-bottom: 1px solid #ccc; /* 可選：加一條邊框與留言區分 */
+      }
+
+      #comments-list {
+          max-height: 400px;   /* 設置留言區最大高度，讓它能滾動 */
+          overflow-y: auto;    /* 當內容超過最大高度時，顯示垂直滾動條 */
+          padding-left: 0;     /* 移除列表的內邊距 */
+      }
+
+      #comments-list li {
+          margin-bottom: 10px; /* 每條留言的底部留空隙 */
+          padding: 10px;
+          border-bottom: 1px solid #f0f0f0; /* 每條留言的邊框 */
+      }
+
+      #comments-list li:last-child {
+          border-bottom: none; /* 最後一條留言去掉邊框 */
+      }
+
+      textarea {
+        width: 100%; /* 預設寬度 */
+        max-width: 500px; /* 最大寬度 */
+        height: 100px; /* 預設高度 */
+    }
+
+    /* 手機端樣式 */
+    @media (max-width: 600px) {
+        textarea {
+            height: 150px;
+            width:300px /* 手機時的高度 */
+        }
+    }
+
+    </style>
+    </head>
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      const preloader = document.getElementById('js-preloader');
+      if (preloader) {
+        preloader.style.display = 'none'; // Hide the preloader
+      }
+    }
+  </script>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url 'Taiwan_movies_all' %}" class="logo">
+                        <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/Team4_logo.png" alt="" style="width: 158px;">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                      <li><a href="{% url 'Taiwan_movies_all' %}">Home</a></li>
+                      <li><a href="{% url 'about_us' %}">關於我們</a></li>
+                      {% if status == 'signed_in' %}
+                      <li><a href="https://taiwan-movies-36c4c3ac2ec6.herokuapp.com/Taiwan_movies_all/user_more"><i class="fas fa-user"></i>{{name}}</a></li>
+                      <li><a href="https://taiwan-movies-36c4c3ac2ec6.herokuapp.com/Taiwan_movies_all/more_detail/?m={{movie_name}}&status=Sign_out">Sign Out</a></li>
+                      {% endif %}
+                      {% if status == 'signed_out' %}
+                      <li><a href="{% url 'hello' %}">Sign In</a></li>
+                      {% endif %}
+                    </ul>
+                    <a class="menu-trigger">
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+  <div class="page-heading header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-lg-12">
+          <h3>{{post.title}}</h3>
+          <a href="https://taiwan-movies-36c4c3ac2ec6.herokuapp.com/Taiwan_movies_all/forum" style="text-decoration: none; display: inline-flex; align-items: center;"><i class="fas fa-arrow-left" style="font-size: 25px; color:white"></i><h4 style="color:white">返回論壇</h4></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="post" style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center;">
+    {% if img %}
+    <img src="{{ img }}" alt="Image" style="max-height: 500px; max-width: 400px; height: auto; width: auto;">
+    {% endif %}
+    <pre style="max-width: 75vw; white-space: pre-wrap; word-wrap: break-word;">{{ post.comment }}</pre>
+</div>
+<div class="comment" style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center;">
+
+</div>
+<div id="comments-section" style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center;">
+    <h2>評論區</h2>
+    <ul class="col-12" id="comments-list">
+        <!-- 留言將會在這裡被動態插入 -->
+        {% if comments %}
+        {% for comment in comments %}
+        <li>
+            <strong>{{ comment.name }}:</strong>
+            <p>{{ comment.what_manage }}</p>
+            <em style="font-size: 10px; opacity: 0.7;">{{ comment.creat_at }}</em>
+        </li>
+        {% endfor %}
+        {% else %}
+        <li>目前沒有留言</li>
+        {% endif %}
+    </ul>
+</div>
+     <!-- 留言表單 -->
+     <div id="comment-form" style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center;">
+      <form id="new-comment-form" method="POST">
+          {% csrf_token %}
+          <label for="author">{{e_mail}}</label>
+          <input type="hidden" name="movieName" value="{{movie_name}}">
+
+
+          <label for="content">留言區:</label><br>
+          <textarea name="massage" id="massage" rows="4" cols="50" required></textarea><br>
+
+          <button type="submit"  {% if 'signed_out' in status %} onclick="alert('請先登入！'); return false ;" {% endif%}>提交</button>
+      </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/isotope.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/owl-carousel.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/counter.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/custom.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('#new-comment-form').on('submit', function(event) {  //選擇表單  點擊提交
+            event.preventDefault();    //阻止表單加載頁面(不用換網址)
+
+            // 獲取表單數據
+            var formData = {
+                'movieName': 'post_id_{{id}}',  //獲取隱藏的電影名稱的值
+                'massage': $('#massage').val(),      //獲取使用者輸入在textarea的值
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            };
+
+            // 發送 AJAX 請求
+            $.ajax({
+                url: "{% url 'massage123' %}",
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // 成功後 新增留言
+                        $('#comments-list').append(
+        `<li>
+            <strong>${response.author}:</strong><br>
+            <p>${response.massage}</p>
+            <em style="font-size: 10px; opacity: 0.7;">${response.created_at}</em>
+        </li>`
+    );
+                        // 清空表單
+                        $('#massage').val('');
+                    } else {
+                        alert(response.error);
+                    }
+                },
+                error: function(xhr) {
+                    const errorMessage = xhr.responseJSON ? xhr.responseJSON.error : '發生錯誤，請稍後再試';
+                    alert(errorMessage);
+                }
+            });
+        });
+    });
+  </script>

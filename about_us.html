@@ -49,12 +49,12 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="{% url 'Taiwan_movies_all' %}" class="logo">
-                            <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/logo.png" alt="" style="width: 158px;">
+                            <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/Team4_logo.png" alt="" style="width: 158px;">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                          <li>
+                          {% comment %} <li>
                             <div class="search-input">
                               <form id="search" action="#">
                                 <input type="text" placeholder="電影搜尋" id='searchText' name="searchKeyword" onkeypress="handle" />
@@ -63,7 +63,7 @@
                                 </button>
                               </form>
                             </div>
-                          </li>
+                          </li> {% endcomment %}
                           <li><a href="{% url 'Taiwan_movies_all' %}">Home</a></li>
                         </ul>
                         <a class='menu-trigger'>

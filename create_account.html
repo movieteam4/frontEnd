@@ -19,6 +19,15 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/movieteam4/style@refs/heads/main/animate.css">
    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
    <!-- TemplateMo 589 lugx gaming -->
+    <style>
+      @media (max-width: 1000px) {
+        .no_display_on_phone {
+          display:none
+        }
+      }
+    </style>
+
+
   </head>
 
   <body>
@@ -49,31 +58,11 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="{% url 'Taiwan_movies_all' %}" class="logo">
-                            <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/logo.png" alt="" style="width: 158px;">
+                            <img src="https://raw.githubusercontent.com/movieteam4/img/refs/heads/main/Team4_logo.png" alt="" style="width: 158px;">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                          <li>
-                            <div class="search-input">
-                              <form id="search" action="#">
-                                <input type="text" placeholder="電影搜尋" id='searchText' name="searchKeyword" onkeypress="handle" />
-                                <button role="button" style="background-color: white; color: black;">
-                                  <i class="fas fa-search" style="font-size: 20px;"></i>
-                                </button>
-                              </form>
-                            </div>
-                          </li>
-                          <li>
-                            <a href="product-details.html">
-                              <i class="fas fa-user" style="font-size: 24px;"></i>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="contact.html">
-                              <i class="fas fa-bars" style="font-size: 24px;"></i>
-                            </a>
-                          </li>
                           <li><a href="{% url 'Taiwan_movies_all' %}">Home</a></li>
                         </ul>
                         <a class='menu-trigger'>
@@ -96,30 +85,34 @@
                   {% csrf_token %}
                   <input type="hidden" name="where_from"  value='from_create' style="font-size: 12px; padding: 20px 20px; font-family: 'Poppins', sans-serif;">
                   <input type="email" name="create_e_mail" id="id_email" value="{{create_e_mail}}" placeholder="輸入信箱" style="font-size: 12px; padding: 10px 20px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; width: 50%; height: 30px; display: inline-block;">
-                  <span id="email-check" style="color:red; font-size: 12px; display: inline-block; width: 200px; vertical-align: middle;"></span>
-                  <br>
+                  <span id="email-check" style="color:red; font-size: 12px; display:inline ; width: 200px; vertical-align: middle;"></span><br>
                   <input type="text" name="create_name" value="{{create_name}}" placeholder="輸入暱稱" style="font-size: 12px; padding: 10px 20px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; width: 50%; height : 30px">
                   <br>
                   <input type="password" name="create_password_1" id="id_password" value="{{create_password_1}}" placeholder="輸入密碼" style="font-size: 12px; padding: 10px 20px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; width: 50%; height: 30px; display: inline-block;">
-                  <span id="password-check" style="color:red; font-size: 12px; display: inline-block; width: 200px; vertical-align: middle;"></span>
-                  <br>
-                  <input type="password" name='create_password_2' value="{{create_password_2}}" placeholder="確認密碼" style="font-size: 12px; padding: 10px 20px; font-family: 'Poppins', sans-serif; margin-bottom: 20px; width: 50%; height : 30px">
-                  <div style="display: flex; gap: 10px;">
-                    <input type="submit" name='create_account' value='建立帳號' style="font-size: 20px; padding: 15px 20px; text-align: center; line-height: 0px; font-family: 'Poppins', sans-serif; flex: none;">
-                  </div>
+                  <span id="password-check" style="color:red; font-size: 12px; display: inline; width: 200px; vertical-align: middle;"></span><br>
+                  <input type="password" name='create_password_2' value="{{create_password_2}}" placeholder="確認密碼" style="font-size: 12px; padding: 10px 20px; font-family: 'Poppins', sans-serif; margin-bottom: 20px; width: 50%; height : 30px"><br>
+                  <input type="submit" name='create_account' value='建立帳號' style="font-size: 20px; padding: 15px 20px; text-align: center; line-height: 0px; font-family: 'Poppins', sans-serif; flex: none;">
                 </form>
                 <p>加入我們吧!<br>{{detail}}</p>
               </div>
             </div>
             <div class="col-lg-4 offset-lg-1">
+              <div class='no_display_on_phone'>
               <div class="right-image">
                 <img src="{{number_1}}" alt="">
                 <span class="price">Team&nbsp;4<br>宏碁班第4組專題<br>電影自動化推薦系統</span>
               </div>
             </div>
           </div>
+          </div>
         </div>
       </div>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/bootstrap.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/isotope.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/owl-carousel.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/counter.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/movieteam4/js@refs/heads/main/custom.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script>
         $(document).ready(function(){
@@ -129,8 +122,12 @@
                 let emailError = $('#email-check');
                 let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
                 // At least 1 uppercase, no special characters, min 8 characters
-                if (!regex.test(email)) {
+                if (email==='') {
+                  emailError.text('');
+                  emailError.prev('br').remove();
+                } else if (!regex.test(email)){
                   emailError.text('請輸入一個包含"@"的電子信箱');
+                  emailError.prepend('<br>');
                 } else {
                 // 發送 AJAX 請求檢查帳號
                   $.ajax({
@@ -142,6 +139,7 @@
                           emailError.text('這個信箱已經被使用');
                         } else {
                           emailError.text('');
+                          emailError.prev('br').remove();
                         }
                     }
                 });
@@ -153,10 +151,15 @@
             let password = $(this).val();
             let passwordError = $('#password-check');
             let regex = /^(?=.*[A-Z])[A-Za-z0-9]{8,}$/;  // At least 1 uppercase, no special characters, min 8 characters
-            if (!regex.test(password)) {
-                passwordError.text('密碼包含至少一個大寫字母且長度至少8個字，且無特殊符號');
+            if (password==='') {
+                passwordError.text('');
+                passwordError.prev('br').remove();
+            } else if (!regex.test(password)){
+              passwordError.text('密碼包含至少一個大寫字母且長度至少8個字，且無特殊符號');
+              passwordError.prepend('<br>');
             } else {
-                passwordError.text('可以使用');
+                passwordError.text('');
+                passwordError.prev('br').remove();
             }
         });
 
